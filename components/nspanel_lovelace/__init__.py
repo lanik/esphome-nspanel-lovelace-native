@@ -70,7 +70,11 @@ REQUIRED_TRANSLATION_KEYS = [
     "arm_custom_bypass","armed_home","armed_away","armed_night","armed_vacation","armed_custom_bypass",
     "arming","disarmed","pending","triggered","disarm","tilt_position",
     "above_horizon","below_horizon","not_home","start_cleaning","return_to_base","docked",
-    "turn_on","turn_off"
+    "turn_on","turn_off","month_january","month_jan","month_february","month_feb","month_march","month_mar",
+    "month_april","month_apr","month_may","month_june","month_jun","month_july","month_jul","month_august",
+    "month_aug","month_september","month_sep","month_october","month_oct","month_november","month_nov",
+    "month_december","month_dec","dow_sunday","dow_sun","dow_monday","dow_mon","dow_tuesday","dow_tue",
+    "dow_wednesday","dow_wed","dow_thursday","dow_thu","dow_friday","dow_fri","dow_saturday","dow_sat"
 ]
 
 CONF_INCOMING_MSG = "on_incoming_msg"
