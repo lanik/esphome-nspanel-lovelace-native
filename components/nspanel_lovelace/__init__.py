@@ -36,6 +36,9 @@ unique_ptr = cg.std_ns.class_("unique_ptr")
 nspanel_lovelace_ns = cg.esphome_ns.namespace("nspanel_lovelace")
 NSPanelLovelace = nspanel_lovelace_ns.class_("NSPanelLovelace", cg.Component, uart.UARTDevice)
 TRANSLATION_ITEM = nspanel_lovelace_ns.enum("translation_item", True)
+icon_t = nspanel_lovelace_ns.enum("icon_t", True)
+custom_icons: dict[str, list] = {}
+custom_icons_index = 0
 
 ALARM_ARM_ACTION = nspanel_lovelace_ns.enum("alarm_arm_action", True)
 ALARM_ARM_OPTIONS = ['arm_home','arm_away','arm_night','arm_vacation','arm_custom_bypass']
@@ -75,6 +78,37 @@ REQUIRED_TRANSLATION_KEYS = [
     "month_aug","month_september","month_sep","month_october","month_oct","month_november","month_nov",
     "month_december","month_dec","dow_sunday","dow_sun","dow_monday","dow_mon","dow_tuesday","dow_tue",
     "dow_wednesday","dow_wed","dow_thursday","dow_thu","dow_friday","dow_fri","dow_saturday","dow_sat"
+]
+BUILTIN_ICON_MAP: list = [
+    ["E003",icon_t.account],["F098",icon_t.air_humidifier],["E027",icon_t.alert_circle],["E5D5",icon_t.alert_circle_outline],
+    ["E041",icon_t.arrow_bottom_left],["E84B",icon_t.arrow_collapse_horizontal],["E044",icon_t.arrow_down],["E84D",icon_t.arrow_expand_horizontal],
+    ["E730",icon_t.arrow_left_bold],["E733",icon_t.arrow_right_bold],["E05B",icon_t.arrow_top_right],["E05C",icon_t.arrow_up],
+    ["E736",icon_t.arrow_up_bold],["E078",icon_t.battery],["E083",icon_t.battery_charging],["E08D",icon_t.battery_outline],
+    ["E09D",icon_t.bell_ring],["E0AB",icon_t.blinds],["F010",icon_t.blinds_open],["E0DD",icon_t.brightness_5],["E0DF",icon_t.brightness_7],
+    ["E0EC",icon_t.calendar],["E0EF",icon_t.calendar_clock],["EE8D",icon_t.calendar_sync],["E113",icon_t.cash],["EC4F",icon_t.chart_bell_curve],
+    ["E5DF",icon_t.check_circle],["EC53",icon_t.check_network_outline],["E12E",icon_t.checkbox_blank_circle],["E132",icon_t.checkbox_marked_circle],
+    ["EAA4",icon_t.circle_slice_8],["EC5E",icon_t.close_network_outline],["E1A0",icon_t.crop_portrait],["E5E6",icon_t.cursor_text],
+    ["F845",icon_t.curtains],["F846",icon_t.curtains_closed],["E81A",icon_t.door_closed],["E81B",icon_t.door_open],["E20F",icon_t.fan],
+    ["E237",icon_t.fire],["E240",icon_t.flash],["E69D",icon_t.format_color_text],["E6D8",icon_t.garage],["E6D9",icon_t.garage_open],
+    ["E646",icon_t.gas_cylinder],["E298",icon_t.gate],["F169",icon_t.gate_open],["E299",icon_t.gauge],["F2A7",icon_t.gesture_tap_button],
+    ["E624",icon_t.help_circle_outline],["E2DB",icon_t.home],["E6A0",icon_t.home_outline],["E97D",icon_t.light_switch],["E334",icon_t.lightbulb],
+    ["ED1A",icon_t.link_box_outline],["E33D",icon_t.lock],["E33E",icon_t.lock_open],["ED90",icon_t.motion_sensor],["F434",icon_t.motion_sensor_off],
+    ["E380",icon_t.movie],["E759",icon_t.music],["E386",icon_t.music_note],["E389",icon_t.music_note_off],["E3CA",icon_t.open_in_app],
+    ["E3D2",icon_t.package],["E3D4",icon_t.package_up],["E3D7",icon_t.palette],["E3E3",icon_t.pause],["E409",icon_t.play],
+    ["ECB7",icon_t.playlist_music],["E410",icon_t.playlist_play],["EDF1",icon_t.playlist_star],["E424",icon_t.power],["E6A4",icon_t.power_plug],
+    ["E6A5",icon_t.power_plug_off],["ECBB",icon_t.progress_alert],["E43C",icon_t.radiobox_blank],["E444",icon_t.ray_vertex],
+    ["E6A8",icon_t.robot],["E70C",icon_t.robot_vacuum],["EBC1",icon_t.script_text],["E497",icon_t.shield],["E6BA",icon_t.shield_airplane],
+    ["E689",icon_t.shield_home],["E99C",icon_t.shield_lock],["F827",icon_t.shield_moon],["E99D",icon_t.shield_off],["E49C",icon_t.shuffle],
+    ["E49D",icon_t.shuffle_disable],["E4A1",icon_t.signal],["EA70",icon_t.smog],["E391",icon_t.smoke_detector],["F92D",icon_t.smoke_detector_alert],
+    ["F80A",icon_t.smoke_detector_variant],["F92F",icon_t.smoke_detector_variant_alert],["E716",icon_t.snowflake],["E4C3",icon_t.speaker_off],
+    ["E763",icon_t.square],["E762",icon_t.square_outline],["E4DA",icon_t.stop],["E503",icon_t.temperature_celsius],["E504",icon_t.temperature_fahrenheit],
+    ["E50E",icon_t.thermometer],["F3AA",icon_t.timer],["E51A",icon_t.timer_outline],["E565",icon_t.vibrate],["E566",icon_t.video],
+    ["E58B",icon_t.water],["E58C",icon_t.water_off],["E58D",icon_t.water_percent],["E58F",icon_t.weather_cloudy],["E590",icon_t.weather_fog],
+    ["E591",icon_t.weather_hail],["E592",icon_t.weather_lightning],["E67D",icon_t.weather_lightning_rainy],["E593",icon_t.weather_night],
+    ["E594",icon_t.weather_partly_cloudy],["EF34",icon_t.weather_partly_snowy_rainy],["E595",icon_t.weather_pouring],["E596",icon_t.weather_rainy],
+    ["E597",icon_t.weather_snowy],["E598",icon_t.weather_sunny],["E59A",icon_t.weather_sunset_down],["E59B",icon_t.weather_sunset_up],
+    ["E59C",icon_t.weather_windy],["E59D",icon_t.weather_windy_variant],["E5AD",icon_t.window_closed],["E5B0",icon_t.window_open],
+    ["F11B",icon_t.window_shutter],["F11D",icon_t.window_shutter_open]
 ]
 
 CONF_INCOMING_MSG = "on_incoming_msg"
@@ -161,6 +195,20 @@ def load_translations(lang: str):
     if len(missingKeys) > 0:
         raise cv.Invalid(f"Translation file missing the following required keys: {missingKeys}")
     _LOGGER.info(f"[nspanel_lovelace] Loaded '{lang}' translation file")
+
+def get_icon(iconHexStr) -> Union[cg.MockObj, None]:
+    global custom_icons, custom_icons_index
+    if not isinstance(iconHexStr, str):
+        return None
+    for v in BUILTIN_ICON_MAP:
+        if iconHexStr == v[0]:
+            return v[1]
+
+    found_icon = custom_icons.get(iconHexStr, None)
+    if found_icon is None:
+        custom_icons[iconHexStr] = [custom_icons_index, cg.RawExpression(r'u8"\u{0}"'.format(iconHexStr))]
+        custom_icons_index += 1
+    return cg.RawExpression(f"CUSTOM_ICONS[{custom_icons[iconHexStr][0]}]")
 
 def get_icon_hex(iconLookup: str) -> Union[str, None]:
     if not iconLookup or len(iconLookup) == 0:
@@ -488,14 +536,11 @@ def generate_icon_config(icon_config, parent_class: cg.MockObj = None) -> Union[
         elif isinstance(icon_config, str):
             attrs["value"] = icon_config
     if isinstance(attrs["value"], str):
-        attrs["value"] = get_icon_hex(attrs["value"])
-        if isinstance(attrs["value"], str):
-            # Make sure it is properly formatted for c++
-            attrs["value"] = r'u8"\u{0}"'.format(attrs["value"])
+        attrs["value"] = get_icon(get_icon_hex(attrs["value"]))
+        if isinstance(parent_class, cg.MockObj):
             # todo: esphome is escaping the icon value (e.g. u8"\uE598") due to cpp_string_escape, so having to build a raw statement instead.
-            if isinstance(parent_class, cg.MockObj):
-                cg.add(cg.RawStatement(f'{parent_class.__str__()}->set_icon_value({attrs["value"]});'))
-                # cg.add(parent_class.set_icon_value(attrs["value"]))
+            # cg.add(parent_class.set_icon_value(attrs["value"]))
+            cg.add(cg.RawStatement(f'{parent_class.__str__()}->set_icon_value({attrs["value"]});'))
     if isinstance(attrs["color"], int):
         if isinstance(parent_class, cg.MockObj):
             cg.add(parent_class.set_icon_color(attrs["color"]))
@@ -531,7 +576,7 @@ def gen_card_entities(entities_config, card_class: cg.MockObjClass, card_variabl
 
 def get_status_icon_statement(icon_config, icon_class: cg.MockObjClass, default_icon_value: str = 'alert-circle-outline'):
     entity_id = get_entity_id(icon_config.get(CONF_ENTITY_ID))
-    default_icon_value = r'u8"\u{0}"'.format(get_icon_hex(default_icon_value))
+    default_icon_value = get_icon(get_icon_hex(default_icon_value))
     attrs = generate_icon_config(icon_config.get(CONF_ICON, {}))
     # return icon_class.__call__(get_new_uuid(), entity_id, attrs["value"], attrs["color"])
     # todo: esphome is escaping the icon value (e.g. u8"\uE598") due to cpp_string_escape, so having to build a raw statement instead.
@@ -574,7 +619,6 @@ async def to_code(config):
     nspanel = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(nspanel, config)
     await uart.register_uart_device(nspanel, config)
-    cg.add_define("USE_NSPANEL_LOVELACE")
     cg.add_global(nspanel_lovelace_ns.using)
 
     enable_tft_upload = True
@@ -708,9 +752,9 @@ async def to_code(config):
     visible_index = 0
 
     prev_card_uuid = next_card_uuid = None
-    navleft_icon_value = r'u8"\u{0}"'.format(get_icon_hex("arrow-left-bold"))
-    navhome_icon_value = r'u8"\u{0}"'.format(get_icon_hex("home"))
-    navright_icon_value = r'u8"\u{0}"'.format(get_icon_hex("arrow-right-bold"))
+    navleft_icon_value = get_icon(get_icon_hex("arrow-left-bold"))
+    navhome_icon_value = get_icon(get_icon_hex("home"))
+    navright_icon_value = get_icon(get_icon_hex("arrow-right-bold"))
     for i, card_config in enumerate(config.get(CONF_CARDS, [])):
         cg.add(cg.RawStatement("{"))
         prev_card_uuid = visible_card_uuids[visible_index - 1]
@@ -806,6 +850,14 @@ async def to_code(config):
 
         cg.add(cg.RawStatement("}"))
 
+    global custom_icons
+    icon_arr: list[str] = []
+    for k,v in custom_icons.items():
+        icon_arr.append(v[1])
+    cg.add_define("CUSTOM_ICONS_SIZE", len(icon_arr))
+    cg.add_global(cg.RawStatement(
+        f"constexpr std::array<const esphome::{nspanel_lovelace_ns}::icon_char_t*, CUSTOM_ICONS_SIZE> "
+        f"CUSTOM_ICONS {{{cg.ArrayInitializer(*icon_arr)}}};"))
 
     cg.add_define("USE_NSPANEL_LOVELACE")
 

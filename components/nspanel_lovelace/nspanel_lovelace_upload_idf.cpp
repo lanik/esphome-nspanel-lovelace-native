@@ -166,7 +166,7 @@ int NSPanelLovelace::upload_by_chunks_(esp_http_client_handle_t http_client, uin
           // and start a new HTTP request with the updated Range header.
           esp_http_client_close(http_client);
           char range_header[32];
-          sprintf(range_header, "bytes=%" PRIu32 "-%" PRIu32, range_start, this->tft_size_);
+          sprintf(range_header, "bytes=%" PRIu32 "-%zu", range_start, this->tft_size_);
           ESP_LOGD(TAG, "Requesting range: %s", range_header);
           esp_http_client_set_header(http_client, "Range", range_header);
         } else {

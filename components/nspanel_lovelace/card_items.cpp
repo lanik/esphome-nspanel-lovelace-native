@@ -2,6 +2,7 @@
 
 #include "config.h"
 #include "card_base.h"
+#include "defines.h"
 #include "helpers.h"
 #include "translations.h"
 #include "types.h"
@@ -141,7 +142,7 @@ void EntitiesCardEntityItem::state_cover_fn(StatefulPageItem *me) {
   StatefulPageItem::state_cover_fn(me);
   auto me_ = static_cast<EntitiesCardEntityItem*>(me);
 
-  std::array<const char *, 4> cover_icons{};
+  std::array<const icon_char_t *, 4> cover_icons{};
   bool cover_icons_found = try_get_value(COVER_MAP,
     cover_icons,
     me_->get_attribute(ha_attr_type::device_class),
@@ -175,13 +176,13 @@ void EntitiesCardEntityItem::state_cover_fn(StatefulPageItem *me) {
       icon_up_status = true;
     }
     if (cover_icons_found)
-      me_->value_.append(cover_icons.at(2));
+      me_->value_.append(CHAR8_CAST(cover_icons.at(2)));
   }
   me_->value_.append(1, '|');
   // STOP
   if (supported_features & 0b1000) {
     icon_stop_status = !me_->is_state(entity_state::unknown);
-    me_->value_.append(icon_t::stop);
+    me_->value_.append(CHAR8_CAST(icon_t::stop));
   }
   me_->value_.append(1, '|');
   // CLOSE
@@ -192,7 +193,7 @@ void EntitiesCardEntityItem::state_cover_fn(StatefulPageItem *me) {
       icon_down_status = true;
     }
     if (cover_icons_found)
-      me_->value_.append(cover_icons.at(3));
+      me_->value_.append(CHAR8_CAST(cover_icons.at(3)));
   }
   me_->value_
     .append(1, '|')

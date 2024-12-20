@@ -46,7 +46,7 @@ PageItem_Icon::PageItem_Icon(IHaveRenderInvalid *const parent) :
     icon_value_overridden_(false), icon_color_overridden_(false) {}
 
 PageItem_Icon::PageItem_Icon(
-    IHaveRenderInvalid *const parent, const std::string &icon_default_value) :
+    IHaveRenderInvalid *const parent, const icon_char_t *icon_default_value) :
     ISetRenderInvalid(parent),
     icon_default_value_(icon_default_value), icon_default_color_(17299u),
     icon_value_(icon_default_value), icon_color_(icon_default_color_),
@@ -60,13 +60,13 @@ PageItem_Icon::PageItem_Icon(
     icon_value_overridden_(false), icon_color_overridden_(false) {}
 
 PageItem_Icon::PageItem_Icon(
-    IHaveRenderInvalid *const parent, const std::string &icon_default_value, const uint16_t icon_default_color) :
+    IHaveRenderInvalid *const parent, const icon_char_t *icon_default_value, const uint16_t icon_default_color) :
     ISetRenderInvalid(parent), 
     icon_default_value_(icon_default_value), icon_default_color_(icon_default_color),
     icon_value_(icon_default_value), icon_color_(icon_default_color),
     icon_value_overridden_(false), icon_color_overridden_(false) {}
 
-void PageItem_Icon::set_icon_value(const std::string &value) {
+void PageItem_Icon::set_icon_value(const icon_char_t *value) {
   this->icon_value_ = value;
   this->icon_value_overridden_ = true;
   set_render_invalid_();
@@ -97,11 +97,11 @@ void PageItem_Icon::reset_icon_color() {
 }
 
 std::string &PageItem_Icon::render_(std::string &buffer) {
-  if (this->icon_value_.empty()) { 
+  if (this->icon_value_ == nullptr) { 
     return buffer.append(1, SEPARATOR);
   }
   return buffer
-    .append(this->icon_value_)
+    .append(CHAR8_CAST(this->icon_value_))
     .append(1, SEPARATOR)
     .append(this->get_icon_color_str());
 }
@@ -164,7 +164,7 @@ StatefulPageItem::StatefulPageItem(
 
 StatefulPageItem::StatefulPageItem(
     const std::string &uuid, std::shared_ptr<Entity> entity,
-    const std::string &icon_default_value) :
+    const icon_char_t *icon_default_value) :
     PageItem(uuid), PageItem_Icon(this, icon_default_value),
     entity_(std::move(entity)), render_type_(nullptr) {
   this->entity_->add_subscriber(this);
@@ -182,7 +182,7 @@ StatefulPageItem::StatefulPageItem(
 
 StatefulPageItem::StatefulPageItem(
     const std::string &uuid, std::shared_ptr<Entity> entity, 
-    const std::string &icon_default_value, 
+    const icon_char_t *icon_default_value, 
     const uint16_t icon_default_color) :
     PageItem(uuid),
     PageItem_Icon(this, icon_default_value, icon_default_color),
@@ -206,7 +206,7 @@ void StatefulPageItem::on_entity_type_change(const char *type) {
     type, entity_render_type::text);
 
   if (type != entity_type::sensor) {
-    const char *icon;
+    const icon_char_t *icon;
     if (try_get_value(ENTITY_ICON_MAP, icon, type)) {
       this->icon_value_ = this->icon_default_value_ = icon;
     }
@@ -325,7 +325,7 @@ void StatefulPageItem::state_binary_sensor_fn(StatefulPageItem *me) {
     if (!me->icon_value_overridden_) {
       me->icon_value_ = get_value_or_default(SENSOR_ON_ICON_MAP,
         me->get_attribute(ha_attr_type::device_class),
-        static_cast<const char *>(icon_t::checkbox_marked_circle));
+        static_cast<const icon_char_t *>(icon_t::checkbox_marked_circle));
     }
   } else {
     if (!me->icon_color_overridden_) {
@@ -337,7 +337,7 @@ void StatefulPageItem::state_binary_sensor_fn(StatefulPageItem *me) {
     if (!me->icon_value_overridden_) {
       me->icon_value_ = get_value_or_default(SENSOR_OFF_ICON_MAP,
         me->get_attribute(ha_attr_type::device_class),
-        static_cast<const char *>(icon_t::radiobox_blank));
+        static_cast<const icon_char_t *>(icon_t::radiobox_blank));
     }
   }
 }
@@ -353,7 +353,7 @@ void StatefulPageItem::state_cover_fn(StatefulPageItem *me) {
   }
   
   if (!me->icon_value_overridden_) {
-    std::array<const char *, 4> icons{};
+    std::array<const icon_char_t *, 4> icons{};
     if (try_get_value(COVER_MAP, icons,
         me->get_attribute(ha_attr_type::device_class))) {
       if (me->is_state(entity_state::closed))

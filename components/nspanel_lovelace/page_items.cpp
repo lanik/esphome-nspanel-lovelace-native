@@ -25,7 +25,7 @@ NavigationItem::NavigationItem(
 
 NavigationItem::NavigationItem(
     const std::string &uuid, const std::string &navigation_uuid, 
-    const std::string &icon_default_value) : 
+    const icon_char_t *icon_default_value) : 
     PageItem(uuid), PageItem_Icon(this, icon_default_value, 65535u),
     navigation_uuid_(navigation_uuid) {
   this->render_buffer_.reserve(this->get_render_buffer_reserve_());
@@ -41,7 +41,7 @@ NavigationItem::NavigationItem(
 
 NavigationItem::NavigationItem(
     const std::string &uuid, const std::string &navigation_uuid, 
-    const std::string &icon_default_value, const uint16_t icon_default_color) :
+    const icon_char_t *icon_default_value, const uint16_t icon_default_color) :
     PageItem(uuid),
     PageItem_Icon(this, icon_default_value, icon_default_color),
     navigation_uuid_(navigation_uuid) {
@@ -76,7 +76,7 @@ StatusIconItem::StatusIconItem(
 
 StatusIconItem::StatusIconItem(
     const std::string &uuid, std::shared_ptr<Entity> entity,
-    const std::string &icon_default_value) :
+    const icon_char_t *icon_default_value) :
     StatefulPageItem(uuid, std::move(entity), icon_default_value),
     alt_font_(false) {
   this->render_buffer_.reserve(this->get_render_buffer_reserve_());
@@ -92,7 +92,7 @@ StatusIconItem::StatusIconItem(
 
 StatusIconItem::StatusIconItem(
     const std::string &uuid, std::shared_ptr<Entity> entity,
-    const std::string &icon_default_value, const uint16_t icon_default_color) :
+    const icon_char_t *icon_default_value, const uint16_t icon_default_color) :
     StatefulPageItem(uuid, std::move(entity),
       icon_default_value, icon_default_color),
     alt_font_(false) {
@@ -181,7 +181,7 @@ std::string &AlarmButtonItem::render_(std::string &buffer) {
  */
 
 AlarmIconItem::AlarmIconItem(const std::string &uuid,
-    const std::string &icon_default_value, const uint16_t icon_default_color) :
+    const icon_char_t *icon_default_value, const uint16_t icon_default_color) :
     PageItem(uuid), PageItem_Icon(this, icon_default_value, icon_default_color) {}
 
 void AlarmIconItem::accept(PageItemVisitor& visitor) { visitor.visit(*this); }

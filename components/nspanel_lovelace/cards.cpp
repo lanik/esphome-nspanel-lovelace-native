@@ -334,7 +334,7 @@ std::string &ThermoCard::render(std::string &buffer) {
         active_colour = 60897U; //light orange
       }
       buffer.append(1, SEPARATOR);
-      buffer.append(get_icon(CLIMATE_ICON_MAP, mode)).append(1, SEPARATOR);
+      buffer.append(CHAR8_CAST(get_icon(CLIMATE_ICON_MAP, mode))).append(1, SEPARATOR);
       buffer.append(std::to_string(active_colour)).append(1, SEPARATOR);
       buffer.append(1, this->thermo_entity_->is_state(mode) ? '1' : '0');
       buffer.append(1, SEPARATOR);
@@ -351,7 +351,7 @@ std::string &ThermoCard::render(std::string &buffer) {
   buffer.append(get_translation(translation_item::state)).append(1, SEPARATOR);
   // buffer.append(get_translation(translation_item::action)).append(1, SEPARATOR); // depreciated
   buffer.append(1, SEPARATOR);
-  buffer.append(this->temperature_unit_icon_).append(1, SEPARATOR);
+  buffer.append(CHAR8_CAST(this->temperature_unit_icon_)).append(1, SEPARATOR);
   buffer.append(dest_temp2_str).append(1, SEPARATOR);
   
   if (this->thermo_entity_->has_attribute(ha_attr_type::preset_modes) || 
@@ -425,7 +425,7 @@ std::string &MediaCard::render(std::string &buffer) {
 
   auto icon = this->media_entity_->is_state(entity_state::playing)
     ? icon_t::pause : icon_t::play;
-  buffer.append(icon).append(1, SEPARATOR);
+  buffer.append(CHAR8_CAST(icon)).append(1, SEPARATOR);
 
   uint32_t supported_features = value_or_default(this->media_entity_->
     get_attribute(ha_attr_type::supported_features), 0UL);
@@ -445,9 +445,9 @@ std::string &MediaCard::render(std::string &buffer) {
   if (supported_features & 0b100000000000000) {
     if (this->media_entity_->
         get_attribute(ha_attr_type::shuffle) == entity_state::on)
-      buffer.append(icon_t::shuffle);
+      buffer.append(CHAR8_CAST(icon_t::shuffle));
     else
-      buffer.append(icon_t::shuffle_disable);
+      buffer.append(CHAR8_CAST(icon_t::shuffle_disable));
   } else {
     buffer.append(generic_type::disable);
   }
@@ -461,7 +461,7 @@ std::string &MediaCard::render(std::string &buffer) {
   auto media_icon = get_value_or_default(MEDIA_TYPE_ICON_MAP, 
     this->media_entity_->get_attribute(ha_attr_type::media_content_type),
     icon_t::speaker_off);
-  buffer.append(media_icon).append(1, SEPARATOR);
+  buffer.append(CHAR8_CAST(media_icon)).append(1, SEPARATOR);
   buffer.append(std::to_string(17299U)).append(2, SEPARATOR);
   
   for (auto& item : this->items_) {

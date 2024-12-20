@@ -747,7 +747,7 @@ void NSPanelLovelace::render_cover_detail_update_(StatefulPageItem *item) {
 
   auto entity = item->get_entity();
 
-  std::array<const char *, 4> cover_icons{};
+  std::array<const icon_char_t *, 4> cover_icons{};
   bool cover_icons_found = try_get_value(COVER_MAP,
     cover_icons,
     entity->get_attribute(ha_attr_type::device_class),
@@ -767,13 +767,13 @@ void NSPanelLovelace::render_cover_detail_update_(StatefulPageItem *item) {
     get_attribute(ha_attr_type::supported_features), 0U);
 
   // Icons
-  const char* cover_icon = generic_type::empty;
-  const char* icon_up   = generic_type::empty;
-  const char* icon_stop = generic_type::empty;
-  const char* icon_down = generic_type::empty;
-  const char* icon_tilt_left   = generic_type::empty;
-  const char* icon_tilt_stop = generic_type::empty;
-  const char* icon_tilt_right = generic_type::empty;
+  const icon_char_t* cover_icon = icon_t::none;
+  const icon_char_t* icon_up = icon_t::none;
+  const icon_char_t* icon_stop = icon_t::none;
+  const icon_char_t* icon_down = icon_t::none;
+  const icon_char_t* icon_tilt_left = icon_t::none;
+  const icon_char_t* icon_tilt_stop = icon_t::none;
+  const icon_char_t* icon_tilt_right = icon_t::none;
 
   std::string text_position = "";
   std::string text_tilt = "";
@@ -873,13 +873,13 @@ void NSPanelLovelace::render_cover_detail_update_(StatefulPageItem *item) {
     // position text~
     .append(text_position).append(1, SEPARATOR)
     // icon~
-    .append(cover_icon).append(1, SEPARATOR)
+    .append(CHAR8_CAST(cover_icon)).append(1, SEPARATOR)
     // icon_up~
-    .append(icon_up).append(1, SEPARATOR)
+    .append(CHAR8_CAST(icon_up)).append(1, SEPARATOR)
     // icon_stop~
-    .append(icon_stop).append(1, SEPARATOR)
+    .append(CHAR8_CAST(icon_stop)).append(1, SEPARATOR)
     // icon_down~
-    .append(icon_down).append(1, SEPARATOR)
+    .append(CHAR8_CAST(icon_down)).append(1, SEPARATOR)
     // icon_up_status~
     .append(icon_up_status ? generic_type::enable : generic_type::disable)
     .append(1, SEPARATOR)
@@ -892,11 +892,11 @@ void NSPanelLovelace::render_cover_detail_update_(StatefulPageItem *item) {
     // tilt text~
     .append(text_tilt).append(1, SEPARATOR)
     // icon_tilt_left~
-    .append(icon_tilt_left).append(1, SEPARATOR)
+    .append(CHAR8_CAST(icon_tilt_left)).append(1, SEPARATOR)
     // icon_tilt_stop~
-    .append(icon_tilt_stop).append(1, SEPARATOR)
+    .append(CHAR8_CAST(icon_tilt_stop)).append(1, SEPARATOR)
     // icon_tilt_right~
-    .append(icon_tilt_right).append(1, SEPARATOR)
+    .append(CHAR8_CAST(icon_tilt_right)).append(1, SEPARATOR)
     // icon_tilt_left_status~
     .append(icon_tilt_left_status
       ? generic_type::enable : generic_type::disable)
@@ -1091,7 +1091,7 @@ void NSPanelLovelace::render_climate_detail_update_(Entity *entity, const std::s
 
   this->command_buffer_.append(1, SEPARATOR)
     // icon_id~
-    .append(get_icon(CLIMATE_ICON_MAP, entity->get_state()))
+    .append(CHAR8_CAST(get_icon(CLIMATE_ICON_MAP, entity->get_state())))
     .append(1, SEPARATOR)
     // icon_color~
     .append(std::to_string(icon_colour)).append(1, SEPARATOR);
