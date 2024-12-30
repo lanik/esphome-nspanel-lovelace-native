@@ -1234,6 +1234,10 @@ void NSPanelLovelace::dump_config() {
       this->entities_.size());
 }
 
+Page NSPanelLovelace::get_page(cont int index){
+  return this->pages_.at(index);
+}
+
 void NSPanelLovelace::send_nextion_command_(const std::string &command) {
   ESP_LOGD(TAG, "Sending: %s", command.c_str());
   this->write_str(command.c_str());
