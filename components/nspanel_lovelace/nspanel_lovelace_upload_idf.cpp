@@ -342,7 +342,7 @@ bool NSPanelLovelace::upload_tft(const std::string &url /*, uint32_t baud_rate*/
   // Tells the Nextion the content length of the tft file and baud rate it will be sent at
   // Once the Nextion accepts the command it will wait until the file is successfully uploaded
   // If it fails for any reason a power cycle of the display will be needed
-  char command[32] = "whmi-wris";
+  char command[32] = "whmi-wri";
   auto sz = snprintf(
     &command[9],
     sizeof(command) - 10, " %" PRIu32 ",%" PRIu32 ",1",
