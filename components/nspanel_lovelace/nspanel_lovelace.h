@@ -140,7 +140,7 @@ public:
 
   void add_incoming_msg_callback(std::function<void(std::string)> callback) { this->incoming_msg_callback_.add(std::move(callback)); }
 
-  Page* get_page(const int index);
+  std::shared_ptr<Page> get_page(const int index);
 
 #ifdef TEST_DEVICE_MODE
   // Only used to simulate TFT commands on test devices

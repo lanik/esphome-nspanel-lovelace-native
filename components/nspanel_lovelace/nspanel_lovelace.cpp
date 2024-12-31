@@ -1234,7 +1234,7 @@ void NSPanelLovelace::dump_config() {
       this->entities_.size());
 }
 
-Page* NSPanelLovelace::get_page(const int index){
+std::shared_ptr<Page> NSPanelLovelace::get_page(const int index){
   return this->pages_.at(index);
 }
 
