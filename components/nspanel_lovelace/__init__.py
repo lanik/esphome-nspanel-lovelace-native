@@ -142,11 +142,14 @@ CONF_CARD_ENTITIES_NAME = "name"
 CARD_ENTITIES="cardEntities"
 CARD_GRID="cardGrid"
 CARD_GRID2="cardGrid2"
+CARD_GRID3="cardGrid3"
+CARD_GRID4="cardGrid4"
+CARD_GRID5="cardGrid5"
 CARD_QR="cardQR"
 CARD_ALARM="cardAlarm"
 CARD_THERMO="cardThermo"
 CARD_MEDIA="cardMedia"
-CARD_TYPE_OPTIONS = [CARD_ENTITIES, CARD_GRID, CARD_GRID2, CARD_QR, CARD_ALARM, CARD_THERMO, CARD_MEDIA]
+CARD_TYPE_OPTIONS = [CARD_ENTITIES, CARD_GRID, CARD_GRID2, CARD_GRID3, CARD_GRID4, CARD_GRID5, CARD_QR, CARD_ALARM, CARD_THERMO, CARD_MEDIA]
 
 CONF_CARD_QR_TEXT = "qr_text"
 CONF_CARD_ALARM_ENTITY_ID = "alarm_entity_id"
@@ -365,6 +368,12 @@ def get_card_entities_length_limits(card_type: str, model: str = 'eu') -> list[i
         return [1,6]
     if (card_type == CARD_GRID2):
         return [1,8]
+    if (card_type == CARD_GRID3):
+        return [1,4]
+    if (card_type == CARD_GRID4):
+        return [1,2]
+    if (card_type == CARD_GRID5):
+        return [1,1]
     if (card_type == CARD_QR):
         return [1,2]
     if (card_type == CARD_MEDIA):
@@ -449,6 +458,15 @@ CONFIG_SCHEMA = cv.All(
                 CARD_GRID2: SCHEMA_CARD_BASE.extend({
                     cv.Required(CONF_CARD_ENTITIES): cv.ensure_list(SCHEMA_CARD_ENTITY)
                 }),
+                CARD_GRID3: SCHEMA_CARD_BASE.extend({
+                    cv.Required(CONF_CARD_ENTITIES): cv.ensure_list(SCHEMA_CARD_ENTITY)
+                }),
+                CARD_GRID4: SCHEMA_CARD_BASE.extend({
+                    cv.Required(CONF_CARD_ENTITIES): cv.ensure_list(SCHEMA_CARD_ENTITY)
+                }),
+                CARD_GRID5: SCHEMA_CARD_BASE.extend({
+                    cv.Required(CONF_CARD_ENTITIES): cv.ensure_list(SCHEMA_CARD_ENTITY)
+                }),
                 CARD_QR: SCHEMA_CARD_BASE.extend({
                     cv.Required(CONF_CARD_ENTITIES): cv.ensure_list(SCHEMA_CARD_ENTITY),
                     cv.Optional(CONF_CARD_QR_TEXT): cv.string_strict
@@ -508,6 +526,9 @@ PAGE_MAP = {
     CARD_ENTITIES: ["nspanel_card_", EntitiesCard, PageType.cardEntities, EntitiesCardEntityItem],
     CARD_GRID: ["nspanel_card_", GridCard, PageType.cardGrid, GridCardEntityItem],
     CARD_GRID2: ["nspanel_card_", GridCard, PageType.cardGrid2, GridCardEntityItem],
+    CARD_GRID3: ["nspanel_card_", GridCard, PageType.cardGrid3, GridCardEntityItem],
+    CARD_GRID4: ["nspanel_card_", GridCard, PageType.cardGrid4, GridCardEntityItem],
+    CARD_GRID5: ["nspanel_card_", GridCard, PageType.cardGrid5, GridCardEntityItem],
     CARD_QR: ["nspanel_card_", QRCard, PageType.cardQR, EntitiesCardEntityItem],
     CARD_ALARM: ["nspanel_card_", AlarmCard, PageType.cardAlarm, AlarmButtonItem],
     CARD_THERMO: ["nspanel_card_", ThermoCard, PageType.cardThermo, None],
@@ -802,7 +823,7 @@ async def to_code(config):
             # cg.add(cg.variable(card_variable, make_shared.template(page_info[1]).__call__(cg.global_ns.class_(page_info[0] + str(i + 1)))))
 
         # Special case for pages which use a different underlying type
-        if card_config[CONF_CARD_TYPE] == CARD_GRID2:
+        if card_config[CONF_CARD_TYPE] in [CARD_GRID2,CARD_GRID3,CARD_GRID4,CARD_GRID5]:
             cg.add(card_class.set_render_type(page_info[2]))
 
         if card_config[CONF_CARD_HIDDEN] == True:
