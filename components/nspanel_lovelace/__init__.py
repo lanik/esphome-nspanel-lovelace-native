@@ -515,7 +515,7 @@ NavigationItem = nspanel_lovelace_ns.class_("NavigationItem")
 StatusIconItem = nspanel_lovelace_ns.class_("StatusIconItem")
 WeatherItem = nspanel_lovelace_ns.class_("WeatherItem")
 EntitiesCardEntityItem = nspanel_lovelace_ns.class_("EntitiesCardEntityItem")
-GridCardEntityItem = nspanel_lovelace_ns.class_("GridCardEntityItem")
+GridCardEntityItem = nspanel_lovelace_ns.class_("EntitiesCardEntityItem")
 AlarmButtonItem = nspanel_lovelace_ns.class_("AlarmButtonItem")
 
 PageType = nspanel_lovelace_ns.enum("page_type", True)
